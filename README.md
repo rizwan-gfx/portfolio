@@ -1,1 +1,1 @@
-Link: https://shethil.github.io/rakin_profile/
+Link: https://rizwan-gfx.github.io/portfolio
