@@ -32,6 +32,18 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <style>
+        /* Add some basic styling */
+        .hidden {
+            display: none;
+        }
+        .thank-you-message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 
 <body class="index-page">
@@ -927,7 +939,7 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="https://formspree.io/f/mblrrgln" method="POST" class="php-email-form" data-aos="fade-up"
+            <form id="contactForm" data-aos="fade-up"
               data-aos-delay="200">
               <div class="row gy-4">
 
@@ -958,6 +970,10 @@
                     you!</div>
 
                   <button type="submit">Send Message</button>
+
+                  <div id="thankYouMessage" class="thank-you-message hidden">
+                      Thank you! Your message has been sent successfully.
+                  </div>
                 </div>
 
               </div>
@@ -1029,6 +1045,31 @@
       });
     });
   </script>
+
+  <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = event.target;
+            const data = new FormData(form);
+            const xhr = new XMLHttpRequest();
+            const thankYouMessage = document.getElementById('thankYouMessage');
+
+            xhr.open('POST', 'https://formspree.io/f/{your_form_id}'); // Replace with your Formspree form ID
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        form.reset(); // Reset the form
+                        thankYouMessage.classList.remove('hidden'); // Show the thank you message
+                    } else {
+                        alert('There was a problem with your submission. Please try again.');
+                    }
+                }
+            };
+            xhr.send(data);
+        });
+    </script>
 
 </body>
 
